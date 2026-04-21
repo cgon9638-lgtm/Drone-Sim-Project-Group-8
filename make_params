@@ -1,0 +1,26 @@
+function params = make_params()
+
+%%Grid
+params.grid_size = [30, 30]; % [rows cols] of the simulation grid
+
+%%Time
+params.dt = 1; % how long one step takes
+params.tMax = 400; % steps before stoping
+
+%%Fire behaviour (used by fire_step)
+params.growth_rate = 0.1; % intensity added per growth step
+params.peak_duration = 5; % how many steps a cell burns for
+params.decay_rate = 0.1; % intensity removed per decay step
+
+%%Stopping condition
+params.extinguishThreshold = 0.1; % when a cell is out
+
+%%Drones
+params.numDrones = 3; % # of drones (minimum 3)
+params.droneSpeed = 1; % cells a drone moves per step
+params.Tolerance = 1.0; % drone waterdrops reach
+
+%%Fire ignition
+params.numFires = 3; % number of independent ignition points
+
+end
