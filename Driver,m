@@ -24,13 +24,13 @@ waterDrops = zeros(0, 2);
 %%Main simulation loop
 while currentTime < params.tMax
 
- % stop if fire is all gone
+ %a stop if fire is all gone
     if max(fire.fire_sectors(:)) < params.extinguishThreshold
         fprintf('All fires out at time: %.2f\n', currentTime);
         break
     end
 
- %converts water drop cords to binary
+ %b converts water drop cords to binary
     water_matrix = zeros(params.grid_size(1), params.grid_size(2));
     for kk = 1 : size(waterDrops, 1)
         r = waterDrops(kk, 1);
@@ -45,13 +45,13 @@ while currentTime < params.tMax
   % Update fire grid — Carlos's module
     fire = fire_step(fire, params, water_matrix);
 
- % Update all drones — Roberto's module
+ %c Update all drones — Roberto's module
     [droneFleet, waterDrops] = updateDrones(droneFleet, fire.fire_sectors);
 
- %plot current state
+ %d plot current state
     plot_state(fire, droneFleet, currentTime);
 
- % simulation clock
+ %e simulation clock
     currentTime = currentTime + params.dt;
 
 end
