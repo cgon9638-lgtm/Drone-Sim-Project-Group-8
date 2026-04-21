@@ -36,8 +36,7 @@ while currentTime < params.tMax
         r = waterDrops(kk, 1);
         c = waterDrops(kk, 2);
   % stops drones from leaving the area
-        if r >= 1 && r <= params.grid_size(1) && ...
-           c >= 1 && c <= params.grid_size(2)
+        if r >= 1 && r <= params.grid_size(1) && c >= 1 && c <= params.grid_size(2)
             water_matrix(r, c) = 1;
         end
     end
