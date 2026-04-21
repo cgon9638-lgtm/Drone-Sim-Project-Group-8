@@ -6,8 +6,7 @@ numDrones = length(droneFleet);
 fprintf('\n%s\n', repmat('=', 1, 62));
 fprintf('SIMULATION SUMMARY\n');
 fprintf('%s\n', repmat('=', 1, 62));
-fprintf('%-5s  %-14s  %-16s  %-16s\n', ...
-        'ID', 'Final Pos', 'Dist Traveled', 'Cells Extinguished');
+fprintf('%-5s  %-14s  %-16s  %-16s\n', 'ID', 'Final Pos', 'Dist Traveled', 'Cells Extinguished');
 fprintf('%s\n', repmat('-', 1, 62));
 
 % Pre-allocate arrays for the CSV table
@@ -20,9 +19,7 @@ CellsOut = zeros(numDrones, 1);
 for ii = 1:numDrones
     d = droneFleet(ii);
 
-    fprintf('%-5d [%3d, %3d] %-16.2f  %-16d\n', ...
-            d.ID, d.Position(1), d.Position(2), ...
-            d.DistanceTraveled, d.CellsExtinguished);
+    fprintf('%-5d [%3d, %3d] %-16.2f  %-16d\n', d.ID, d.Position(1), d.Position(2), d.DistanceTraveled, d.CellsExtinguished);
 
     IDs(ii) = d.ID;
     FinalRow(ii) = d.Position(1);
@@ -43,9 +40,7 @@ fprintf('Estimated fuel consumed:%.2f\n', fuelConsumed);
 fprintf('%s\n', repmat('=', 1, 62));
 
 %%Write CSV
-T = table(IDs, FinalRow, FinalCol, DistTrav, CellsOut, ...
-    'VariableNames', {'DroneID', 'FinalRow', 'FinalCol', ...
-                      'DistanceTraveled', 'CellsExtinguished'});
+T = table(IDs, FinalRow, FinalCol, DistTrav, CellsOut,'VariableNames', {'DroneID', 'FinalRow', 'FinalCol', 'DistanceTraveled', 'CellsExtinguished'});
 
 writetable(T, 'drone_summary.csv');
 fprintf('\n  CSV saved  → drone_summary.csv\n');
