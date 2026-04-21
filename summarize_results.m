@@ -37,9 +37,9 @@ fuelRemaining = sum(fire.consumable_grid(:));
 fuelConsumed = params.grid_size(1) * params.grid_size(2) - fuelRemaining;
 
 fprintf('%s\n', repmat('-', 1, 62));
-fprintf('  Cells still above extinguish threshold:%d\n', cellsStillBurning);
-fprintf('  Total fuel remaining:%.2f\n', fuelRemaining);
-fprintf('  Estimated fuel consumed:%.2f\n', fuelConsumed);
+fprintf('Cells still above extinguish threshold:%d\n', cellsStillBurning);
+fprintf('Total fuel remaining:%.2f\n', fuelRemaining);
+fprintf('Estimated fuel consumed:%.2f\n', fuelConsumed);
 fprintf('%s\n', repmat('=', 1, 62));
 
 %%Write CSV
