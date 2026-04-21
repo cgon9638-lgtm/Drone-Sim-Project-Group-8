@@ -1,0 +1,20 @@
+function fire = init_fire(params)
+
+rows = params.grid_size(1);
+cols = params.grid_size(2);
+
+% allows each cell to have fire spread to it
+fire.consumable_grid = ones(rows, cols);
+fire.fire_sectors = zeros(rows, cols);
+fire.time_at_peak = zeros(rows, cols);
+
+%%Spark spawmpoints
+margin = round(min(rows, cols) * 0.10); %keeps sparks away from the sides
+
+for k = 1 : params.numFires %keeps sparks off the border and in bounds
+    rx = round(margin + rand() * (rows - 2*margin));
+    cy = round(margin + rand() * (cols - 2*margin));
+    fire.fire_sectors(rx, cy) = params.growth_rate;   % small spark, enters Growth phase
+end
+
+end
