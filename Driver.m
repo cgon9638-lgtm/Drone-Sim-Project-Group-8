@@ -1,0 +1,60 @@
+clear; clc; close all;
+
+%%Minecraft world seed
+rng(67); % randomize runs.
+
+%%Build params
+params = make_params(); % simulation constants
+
+%%Initialise fire environment
+fire = init_fire(params);
+
+%%Initialise drone fleet
+% Roberto's initDrones function.
+droneFleet = initDrones(params.numDrones); % drones spawn randomly to 
+% search for fire
+
+%%Loop control variables
+currentTime = 0;
+
+% The simulation uses an waterDrops matrix to track [row, col] 
+% grid coordinates for fire suppression.
+waterDrops = zeros(0, 2);
+
+%%Main simulation loop
+while currentTime < params.tMax
+
+ %a stop if fire is all gone
+    if max(fire.fire_sectors(:)) < params.extinguishThreshold
+        fprintf('All fires out at time: %.2f\n', currentTime);
+        break
+    end
+
+ %b converts water drop cords to binary
+    water_matrix = zeros(params.grid_size(1), params.grid_size(2));
+    for kk = 1 : size(waterDrops, 1)
+        r = waterDrops(kk, 1);
+        c = waterDrops(kk, 2);
+  % stops drones from leaving the area
+        if r >= 1 && r <= params.grid_size(1) && c >= 1 && c <= params.grid_size(2)
+            water_matrix(r, c) = 1;
+        end
+    end
+
+  % Update fire grid — Carlos's module
+    fire = fire_step(fire, params, water_matrix);
+
+ %c Update all drones — Roberto's module
+    [droneFleet, waterDrops] = updateDrones(droneFleet, fire.fire_sectors);
+
+ %d plot current state
+    plot_state(fire, droneFleet, currentTime);
+
+ %e simulation clock
+    currentTime = currentTime + params.dt;
+
+end
+
+%%Post-simulation output
+fprintf('Simulation ended. Final time: %.2f\n', currentTime);
+summarize_results(droneFleet, fire, params);
